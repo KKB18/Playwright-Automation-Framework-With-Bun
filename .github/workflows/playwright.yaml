@@ -15,16 +15,16 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Cache Bun dependencies
-          uses: actions/cache@v3
-          with:
-            path: ~/.bun/install/cache
-            key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
-            restore-keys: |
-              ${{ runner.os }}-bun-
+        uses: actions/cache@v3
+        with:
+          path: ~\AppData\Local\Bun\install\cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
 
       - uses: oven-sh/setup-bun@v1
         with:
-          bun-version: latest   # or pin to "1.1.7" etc.
+          bun-version: latest
 
       - name: Install dependencies
         run: bun ci
@@ -35,7 +35,6 @@ jobs:
       - name: Run Playwright tests
         env:
           ENV: ${{ vars.WEBSITE }}
-          TAGS: ${{ vars.TAGS }}
         run: bun run test
 
       - uses: actions/upload-artifact@v4
