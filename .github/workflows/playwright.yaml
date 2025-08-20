@@ -14,6 +14,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Cache Bun dependencies
+          uses: actions/cache@v3
+          with:
+            path: ~/.bun/install/cache
+            key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+            restore-keys: |
+              ${{ runner.os }}-bun-
+
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest   # or pin to "1.1.7" etc.
